@@ -1,0 +1,124 @@
+<ol class="breadcrumb">
+    <li><a href="home">Home</a></li>
+    <li><a href="localimage/">Local Images</a></li>
+</ol>
+
+<h1>Images</h1>
+
+<div class="input-group repository-list-search">
+    <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+    <input type="search" placeholder="Filter image on this page" ng-model="searchTerm" class="form-control">
+    <span class="input-group-addon">Images <span ng-bind-template="({{filteredImages.length}}/{{localImages.length}})"></span></span>
+    <span class="input-group-addon" type="button" ng-click="buildImage()" class="btn btn-info">Build Image</span>
+</div>
+
+<div ng-hide="true">
+<!-- <div ng-hide="appMode.browseOnly"> -->
+  <!-- Maybe put this into its own directive? -->
+  <button type="button" ng-disabled="!selectedRepositories.length" ng-click="openConfirmRepoDeletionDialog()" class="btn btn-danger">
+    <span class="glyphicon glyphicon-trash"></span>
+    <ng-pluralize count="selectedRepositories.length"
+                 when="{'0': 'Select repositores to delete', 'one': 'Delete one repository', 'other': 'Delete {} repositories'}">
+    </ng-pluralize>
+  </button>
+</div>
+
+
+
+  <table class="table table-hover">
+    <thead>
+        <th >
+            REPOSITORY
+        </th>
+        <th >
+            TAG
+        </th>
+        <th >
+            IMAGE ID
+        </th>
+        <th >
+            GREATED
+        </th>
+        <th >
+            VIRTUAL SIZE
+        </th>
+        <th>
+            OPERATION
+        </th>
+    </thead>
+    <tbody ng-repeat="image in  (filteredImages=(localImages | filter:searchTerm))">
+          <tr ng-repeat="tag in image.RepoTags">
+            <td>
+              {{tag | repo_tag:true}}
+            </td>
+            <td >
+              {{tag | repo_tag: false}}
+            </td>
+            <td>
+              {{image.imageId | limitTo: 12}} 
+            </td>
+            <td >
+              {{image.Created | calTime}} 
+            </td>
+            <td>
+             {{image.VirtualSize  / 1024 / 1024 | number: 2}} MB
+            </td>
+            <td>
+              <button title="Tag or Push Image" type="button" ng-disabled="waiteFlag" ng-click="tagImage(tag)" class="btn btn-info">
+                <span class="glyphicon glyphicon-edit"></span>        
+              </button>
+
+              <button title="History Image" type="button" ng-disabled="waiteFlag" ng-click="historyImage(tag)" class="btn btn-info">
+                <span class="glyphicon glyphicon-info-sign"></span>        
+              </button>
+
+              <button title="Inspect Image" type="button" ng-disabled="waiteFlag" ng-click="inspectImage(tag)" class="btn btn-info">
+                <span class="glyphicon glyphicon-eye-open"></span>        
+              </button>
+
+              <button title="Delete Image" type="button" ng-disabled="waiteFlag" ng-click="removeImage(tag)" class="btn btn-danger">
+                <span class="glyphicon glyphicon-trash"></span>        
+              </button>
+            </td>
+          </tr>
+    </tbody>
+  </table>
+
+
+<nav>
+  <ul class="pager">
+    <li class="previous" ng-class="{disabled: !lastNamespace || !lastRepository}">
+      <a href="localimage/{{reposPerPage}}">
+        <span aria-hidden="true">&larr;</span>
+        First page
+      </a>
+    </li>
+    <li>
+      <div class="btn-group" role="group">
+        <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+          <span class="glyphicon glyphicon-book" aria-hidden="true"> </span> / page:
+          <span ng-show="reposPerPage">{{reposPerPage}}</span>
+          <span ng-show="!reposPerPage">all</span>
+          <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="localimage">Show all</a></li>
+          <li role="separator" class="divider"></li>
+          <li><a href="localimage/10">10</a></li>
+          <li><a href="localimage/20">20</a></li>
+          <li><a href="localimage/40">40</a></li>
+          <li><a href="localimage/60">60</a></li>
+          <li><a href="localimage/80">80</a></li>
+          <li><a href="localimage/100">100</a></li>
+        </ul>
+      </div>
+    </li>
+    <li class="next" ng-class="{disabled: !repositories.lastNamespace || !repositories.lastRepository}">
+      <!-- TODO: Make sure the button is not clickable -->
+      <a href="/repositories/{{reposPerPage}}/{{repositories.lastNamespace}}/{{repositories.lastRepository}}"
+        ng-disabled="!repositories.lastNamespace || !repositories.lastRepository">
+        Next <span aria-hidden="true">&rarr;</span>
+      </a>
+    </li>
+  </ul>
+</nav>

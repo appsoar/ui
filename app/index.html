@@ -1,0 +1,103 @@
+<!doctype html>
+<html class="no-js" ng-app="docker-registry-frontend" ng-controller="MainController as main">
+  <head>
+    <base href="/">
+    <meta charset="utf-8">
+    <title ng-bind-template="Cloudsoar registry {{main.$location.path()}}">Cloudsoar registry</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css(.) styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="bower_components/toastr/toastr.css" />
+    <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.css" />
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
+  </head>
+  <body>
+    <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <!-- Add your site or application content here -->
+
+
+    <div class="container">
+
+      <div class="masthead">
+        <h3 class="text-muted">Cloudsoar Registry Frontend</h3>
+      </div>
+
+      <main ng-view></main>
+
+      <footer>
+        <p>
+          <a href="https://github.com/kwk/docker-registry-frontend/issues/new"><span class="glyphicon glyphicon-fire"></span> <small>Report a bug</small></a>
+          <a href="https://github.com/kwk/docker-registry-frontend/fork"><span class="glyphicon glyphicon-random"></span> <small> Fork me on GitHub</small></a>
+          <a href="about"><span class="glyphicon glyphicon-question-sign"></span> <small>About</small></a>
+          <a href="https://github.com/kwk/docker-registry-frontend/commit/{{appVersion.git.sha1}}"><span class="glyphicon glyphicon-barcode"></span> <small>This is git revision: <span ng-bind-template="{{appVersion.git.sha1 | limitTo: 7}}">-</span></small></a>
+        </p>
+      </footer>
+
+    </div>
+
+    <!-- build:js(.) scripts/oldieshim.js -->
+    <!--[if lt IE 9]>
+    <script src="bower_components/es5-shim/es5-shim.js"></script>
+    <script src="bower_components/json3/lib/json3.js"></script>
+    <![endif]-->
+    <!-- endbuild -->
+
+    <!-- build:js(.) scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/toastr/toastr.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="bower_components/angular-loading-bar/build/loading-bar.js"></script>
+    <script src="bower_components/moment/moment.js"></script>
+    <script src="bower_components/angular-moment/angular-moment.js"></script>
+    <script src="bower_components/angular-smart-table/dist/smart-table.min.js"></script>
+    <script src="bower_components/angular-filter/dist/angular-filter.min.js"></script>
+    <script src="bower_components/angular-bootstrap-checkbox/angular-bootstrap-checkbox.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    <!-- build:js({.tmp,app}) scripts/scripts.js -->
+    <script src="app.js"></script>
+    <script src="main-controller.js"></script>
+
+    <script src="home/home-controller.js"></script>
+
+    <script src="repository/repository-detail-controller.js"></script>
+    <script src="repository/delete-repository-controller.js"></script>
+    <script src="repository/repository-list-controller.js"></script>
+
+    <script src="tag/tag-controller.js"></script>
+    <script src="tag/tag-item-controller.js"></script>
+    <script src="tag/create-tag-controller.js"></script>
+    <script src="tag/delete-tags-controller.js"></script>
+    <script src="tag/tag-list-directive.js"></script>
+
+    <script src="image/image-controller.js"></script>
+    <script src="image/image-details-directive.js"></script>
+
+    <script src="services/registry-services.js"></script>
+    <script src="services/app-version-services.js"></script>
+    <script src="services/app-mode-services.js"></script>
+    <script src="localimage/localimage-list-controller.js"></script>
+    <script src="localimage/tag-push-controller.js"></script>
+    <!-- endbuild -->
+</body>
+</html>

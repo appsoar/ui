@@ -1,0 +1,104 @@
+<h2>
+  Image Details
+  <div ng-hide="appMode.browseOnly" class="pull-right">
+    <a href="image/{{imageDetails.id}}/tag/{{repositoryUser}}/{{repositoryName}}" class="btn btn-default">
+      <span class="glyphicon glyphicon-plus"></span>
+      Create a tag for this image
+    </a>
+  </div>
+</h2>
+
+<tabset>
+  <tab>
+    <tab-heading>
+      General information
+    </tab-heading>
+    <form class="form-horizontal"  role="form">
+      <div class="form-group">
+        <label class="col-sm-2 control-label"><span class="glyphicon glyphicon-user"></span> Author</label>
+        <div class="col-sm-10">
+          <p class="form-control-static">{{imageDetails.author}}</p>
+        </div>
+      </div>
+      <div class="form-group" ng-if="imageDetails.comment">
+        <label class="col-sm-2 control-label"><span class="glyphicon glyphicon-comment"></span> Comment</label>
+        <div class="col-sm-10">
+          <p class="form-control-static">
+            <pre>{{imageDetails.comment}}</pre>
+          </p>
+        </div>
+      </div>
+      <div class="form-group" >
+        <label class="col-sm-2 control-label"><span class="glyphicon glyphicon-calendar"></span> Created</label>
+        <div class="col-sm-10">
+          <p class="form-control-static">
+            <span am-time-ago="imageDetails.created"></span>
+            <span class="text-muted"> ({{imageDetails.created | date:'yyyy-MM-dd HH:mm:ss Z'}})</span>
+          </p>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label"><span class="glyphicon glyphicon-eye-open"></span> Docker version</label>
+        <div class="col-sm-10">
+          <p class="form-control-static">{{imageDetails.docker_version}}</p>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label"><span class="glyphicon glyphicon-cog"></span> OS</label>
+        <div class="col-sm-10">
+          <p class="form-control-static">{{imageDetails.os}}/{{imageDetails.architecture}}</p>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label"><span class="glyphicon glyphicon-qrcode"></span> ID</label>
+        <div class="col-sm-10">
+          <p class="form-control-static">
+            {{imageDetails.id | limitTo: 12}}
+          </p>
+        </div>
+      </div>
+     <!--  <div class="form-group">
+        <label class="col-sm-2 control-label"><span class="glyphicon glyphicon-arrow-up"></span> Parent's layer ID</label>
+        <div class="col-sm-10">
+          <p class="form-control-static">
+            {{imageDetails.parentLayer | limitTo: 12}}
+          </p>
+        </div>
+      </div> -->
+      
+<!--       <div class="form-group">
+        <label class="col-sm-2 control-label"><span class="glyphicon glyphicon-compressed"></span> Size <small>(including base image sizes)</small></label>
+        <div class="col-sm-10">
+          <p class="form-control-static">
+            <span ng-show="totalImageSize!==null">
+              {{totalImageSize/1024/1024 | number: 2}} <b>MB</b> {{totalImageSize / 1024 | number: 2}} <b>KB</b> {{totalImageSize}} <b>B</b>
+            </span>
+            <button type="submit" class="btn btn-info" ng-click="calculateTotalImageSize()" ng-show="totalImageSize===null">
+              <span class="glyphicon glyphicon-stats"></span> Calculate
+            </button>
+          </p>
+        </div>
+      </div> --> 
+    </form>
+  </tab>
+  <tab>
+    <tab-heading>
+      Labels
+    </tab-heading>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Key</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="(key, value) in imageDetails.labels">
+            <td>{{key}}</td>
+            <td>{{value}}</td>
+          </tr>
+        </tbody>
+      </table>
+  </tab>
+</tabset>
+

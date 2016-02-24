@@ -1,0 +1,27 @@
+<div class="modal-header">
+    <h3 class="modal-title">
+      {{ tag }}
+    </h3>
+</div>
+
+<div class="modal-body">
+  <p class="text-justify">{{ information }}</p>
+    <input ng-model="newTag" class="form-control"></input>
+</div>
+
+<div class="modal-footer">
+  <button type="button" ng-click="doTagImage()" class="btn btn-danger">
+  <span class="glyphicon glyphicon-tag"></span>
+  Tag
+  </button>
+
+  <button type="button" ng-click="doPushImage()" class="btn btn-danger">
+  <span class="glyphicon glyphicon-cloud"></span>
+  Push
+  </button>
+
+  <button type="button" ng-click="cancel()" class="btn">
+  <span class="glyphicon glyphicon-cancel"></span>
+  Cancel
+  </button>
+</div>
