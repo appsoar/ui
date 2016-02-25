@@ -44,7 +44,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:kwk/docker-registry-frontend.git"
+    "url": "git@github.com:appsoar/ui.git"
   },
   "keywords": [
     "docker",
@@ -55,6 +55,6 @@
   "author": "Konrad Kleine",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/kwk/docker-registry-frontend/issues"
+    "url": "https://github.com/appsoar/ui/issues"
   }
 }
