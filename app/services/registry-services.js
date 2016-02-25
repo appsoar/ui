@@ -265,10 +265,32 @@ angular.module('registry-services', ['ngResource'])
         return angular.fromJson(data);  
       }
     },
-    'remove': {
+  'remove': {
       method: 'DELETE',
       isArray: true,
       url: 'http://192.168.3.147:9001/images/:imageName?force=true'
+    },
+    'build': {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/tar'
+      },
+      url: 'http://192.168.3.147:9001/build'
+    },
+/*    'tar': {
+      method: 'GET',
+      headers: {
+        'responseType': 'arraybuffer'
+      },
+      url: 'http://192.168.3.147:9001/images/:imageName/get?names=:names'
+    },*/
+    'load': {
+      method: 'POST',
+      transformRequest: [],
+      headers: {
+           'Content-Type': 'application/tar'
+      },
+      url: 'http://192.168.3.147:9001/images/load'
     }
   });
 }]);

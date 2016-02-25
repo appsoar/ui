@@ -16,9 +16,14 @@
   </button>
 
   <button type="button" ng-click="doPushImage()" class="btn btn-danger">
-  <span class="glyphicon glyphicon-cloud"></span>
+  <span class="glyphicon glyphicon-cloud-upload"></span>
   Push
   </button>
+
+  <a type="button" href="http://192.168.3.147:9001/images/{{tag}}/get?names={{tag}}.tar" ng-click="doTarImage()" class="btn btn-danger">
+  <span class="glyphicon glyphicon-compressed"></span>
+  Tar
+  </a>
 
   <button type="button" ng-click="cancel()" class="btn">
   <span class="glyphicon glyphicon-cancel"></span>

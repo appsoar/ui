@@ -8,8 +8,8 @@
  * Controller of the docker-registry-frontend
  */
  angular.module('localimage-list-controller', ['registry-services'])
- .controller('LocalimageListController', ['$scope', '$modal', '$window', 'ListImage', 
-  function($scope, $modal, $window, ListImage){
+ .controller('LocalimageListController', ['$scope', '$modal', '$window','$http', 'ListImage', 
+  function($scope, $modal, $window, http, ListImage){
     // $rootScope.refreshFlag = false;
     var queryObject = {};
     $scope.localImages = ListImage.query(queryObject);
@@ -55,8 +55,52 @@
 
     $scope.buildImage = function(){
         // alert($rootScope.refreshFlag);
-    }
+        var tarFile = document.getElementById('tarFile').files[0];
+        var reader = new FileReader();
+        var params = {
+          // dockerfile: '/home/dx/ui/app/test.tar',
+          t: 'ubuntu:v1.0.0'
+        };
+        reader.onload = function(){
+          // var data = this.result;
+          ListImage.build(params,{ data: this.result},
+            function(value, responseHeaders) {
+              toastr.success(' success.');
+            },
+            function(httpResponse) {
+              toastr.error('Failed ' + httpResponse.statusText);
+            }
+          );
+          
+        }
+        reader.readAsBinaryString(tarFile);
+    };
 
+    $scope.loadImage = function(){
+        // alert($rootScope.refreshFlag);
+        var tarFile = document.getElementById('tarFile').files[0];
+        var reader = new FileReader();
+        var params = {
+          // dockerfile: '/get.tar',
+           // tags: 'ubuntu:v1.0.0'
+        };
+        reader.onload = function(){
+            console.log(this.result);
+            // var data = this.result;
+          ListImage.load(params,{data : this.result},
+            function(value, responseHeaders) {
+              toastr.success(' success.');
+            },
+            function(httpResponse) {
+              toastr.error('Failed ' + httpResponse.statusText);
+            }
+          );
+        }
+        reader.readAsBinaryString(tarFile);
+    };
+    // $scope.loadImage = function() {
+    //     $http.post()
+    // };
     $scope.historyImage = function(tag){
         var params = {
           imageName: tag

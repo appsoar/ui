@@ -8,8 +8,8 @@
  * Controller of the docker-registry-frontend
  */
 angular.module('tag-push-controller', ['registry-services'])
-  .controller('TagPushController', ['$scope', '$route', '$modalInstance', '$window',  'ListImage', 'information', 'tag',  
-  function( $scope, $route, $modalInstance, $window, ListImage, information, tag){
+  .controller('TagPushController', ['$scope', '$route', '$modalInstance', '$window', '$http', 'ListImage', 'information', 'tag',  
+  function( $scope, $route, $modalInstance, $window,$http, ListImage, information, tag){
     $scope.information = information;
     $scope.tag = tag;
     $scope.newTag = tag ;
@@ -57,6 +57,27 @@ angular.module('tag-push-controller', ['registry-services'])
         );
         $modalInstance.close();
       };
+
+      $scope.doTarImage = function(){
+        // alert($rootScope.refreshFlag);
+/*        var params = {
+          imageName: tag,
+          names: tag+'.tar'
+        };
+        ListImage.tar(params,{},
+            function(value, responseHeaders) {
+              var blob = new Blob([value], {type : 'application/x-tar'});
+              var objectUrl = URL.createObjectURL(blob);
+              window.open(objectUrl);
+              toastr.success(' success.');
+              // $modalInstance.close();
+            },
+            function(httpResponse) {
+              toastr.error('Failed ' + httpResponse.statusText);
+            }
+          );*/
+          $modalInstance.close();
+    };
 
     $scope.cancel = function () {
       $modalInstance.dismiss('cancel');

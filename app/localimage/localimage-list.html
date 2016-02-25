@@ -2,14 +2,18 @@
     <li><a href="home">Home</a></li>
     <li><a href="localimage/">Local Images</a></li>
 </ol>
-
-<h1>Images</h1>
-
+<div class="input-group repository-list-search">
+    <h3>
+      <label>Images</label>
+      <button  type="button" ng-click="buildImage()" class="btn btn-info">Build Image</button>
+      <button  type="button" ng-click="loadImage()" class="btn btn-info">Load Image</button>
+      <input id="tarFile" type="file" class="form-control"></input>
+    </h3>
+</div>
 <div class="input-group repository-list-search">
     <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
     <input type="search" placeholder="Filter image on this page" ng-model="searchTerm" class="form-control">
     <span class="input-group-addon">Images <span ng-bind-template="({{filteredImages.length}}/{{localImages.length}})"></span></span>
-    <span class="input-group-addon" type="button" ng-click="buildImage()" class="btn btn-info">Build Image</span>
 </div>
 
 <div ng-hide="true">
@@ -61,7 +65,7 @@
               {{image.Created | calTime}} 
             </td>
             <td>
-             {{image.VirtualSize  / 1024 / 1024 | number: 2}} MB
+             {{image.VirtualSize  / 1000 / 1000 | number: 2}} MB
             </td>
             <td>
               <button title="Tag or Push Image" type="button" ng-disabled="waiteFlag" ng-click="tagImage(tag)" class="btn btn-info">
