@@ -40,7 +40,9 @@ angular
     'angular.filter',
     'ui.checkbox',
     //add for image list
-    'localimage-list-controller'
+    'localimage-list-controller',
+    'localimage-detail-controller',
+    'local-image-controller'
     //end add 
   ])
   .config(['$routeProvider', '$resourceProvider', 'cfpLoadingBarProvider', '$locationProvider',
@@ -77,7 +79,7 @@ angular
         templateUrl: 'repository/repository-detail.html',
         controller: 'RepositoryController',
       }).
-	    when('/about', {
+	when('/about', {
         templateUrl: 'about.html',
       }).
       when('/tag/:repositoryUser/:repositoryName/:tagName', {
@@ -92,9 +94,13 @@ angular
         templateUrl: 'tag/create-tag.html',
         controller: 'CreateTagController',
       }).
-      when('/localimage/:reposPerPage?/', {
+      when('/localimage/:reposPerPage', {
         templateUrl: 'localimage/localimage-list.html',
         controller: 'LocalimageListController',
+      }).
+      when('/detail?', {
+        templateUrl: 'localimage/localimage-detail.html',
+        controller: 'LocalimageDetailController',
       }).
       otherwise({
         redirectTo: '/home'

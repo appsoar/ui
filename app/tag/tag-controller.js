@@ -50,7 +50,6 @@ angular.module('tag-controller', ['registry-services'])
         });
       } 
     },true);
-
     // Copy collection for rendering in a smart-table
     $scope.displayedTags = [].concat($scope.tags);
 

@@ -120,7 +120,7 @@
         console.log(history);
     };
 
-    $scope.inspectImage = function(tag){
+/*    $scope.inspectImage = function(tag){
         var params = {
           imageName: tag
         };
@@ -137,7 +137,7 @@
         );
         console.log('inspect');
         console.log(inspect);
-    };
+    };*/
 
     $scope.removeImage = function(tag){
         var params = {

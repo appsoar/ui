@@ -7,4 +7,11 @@ angular.module('image-details-directive', [])
       templateUrl: 'image/image-details-directive.html',
       controller: 'ImageController',
     };
+  })
+  .directive('localimageDetails', function(){
+    return {
+      restrict: 'E',
+      templateUrl: 'image/image-details-directive.html',
+      controller: 'LocalImageController',
+    };
   });

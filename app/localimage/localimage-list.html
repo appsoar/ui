@@ -1,13 +1,13 @@
 <ol class="breadcrumb">
     <li><a href="home">Home</a></li>
-    <li><a href="localimage/">Local Images</a></li>
+    <li><a href="localimage/20/">Local Images</a></li>
 </ol>
 <div class="input-group repository-list-search">
     <h3>
       <label>Images</label>
-      <button  type="button" ng-click="buildImage()" class="btn btn-info">Build Image</button>
+<!--       <button  type="button" ng-click="buildImage()" class="btn btn-info">Build Image</button>
       <button  type="button" ng-click="loadImage()" class="btn btn-info">Load Image</button>
-      <input id="tarFile" type="file" class="form-control"></input>
+      <input id="tarFile" type="file" class="form-control"></input> -->
     </h3>
 </div>
 <div class="input-group repository-list-search">
@@ -53,7 +53,7 @@
     <tbody ng-repeat="image in  (filteredImages=(localImages | filter:searchTerm))">
           <tr ng-repeat="tag in image.RepoTags">
             <td>
-              {{tag | repo_tag:true}}
+              <a href="/detail?tag={{tag}}">{{tag | repo_tag:true}}</a>       
             </td>
             <td >
               {{tag | repo_tag: false}}
@@ -63,6 +63,7 @@
             </td>
             <td >
               {{image.Created | calTime}} 
+              <!-- <span am-time-ago="image.Created"></span> -->
             </td>
             <td>
              {{image.VirtualSize  / 1000 / 1000 | number: 2}} MB
@@ -76,9 +77,9 @@
                 <span class="glyphicon glyphicon-info-sign"></span>        
               </button>
 
-              <button title="Inspect Image" type="button" ng-disabled="waiteFlag" ng-click="inspectImage(tag)" class="btn btn-info">
+<!--               <button title="Inspect Image" type="button" ng-disabled="waiteFlag" ng-click="inspectImage(tag)" class="btn btn-info">
                 <span class="glyphicon glyphicon-eye-open"></span>        
-              </button>
+              </button> -->
 
               <button title="Delete Image" type="button" ng-disabled="waiteFlag" ng-click="removeImage(tag)" class="btn btn-danger">
                 <span class="glyphicon glyphicon-trash"></span>        
