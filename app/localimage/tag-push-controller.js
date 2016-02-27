@@ -8,8 +8,8 @@
  * Controller of the docker-registry-frontend
  */
 angular.module('tag-push-controller', ['registry-services'])
-  .controller('TagPushController', ['$scope', '$route', '$modalInstance', '$window', '$http', 'ListImage', 'information', 'tag',  
-  function( $scope, $route, $modalInstance, $window,$http, ListImage, information, tag){
+  .controller('TagPushController', ['$rootScope', '$scope', '$route', '$modalInstance', '$window', '$http', 'ListImage', 'information', 'tag',  
+  function( $rootScope, $scope, $route, $modalInstance, $window,$http, ListImage, information, tag){
     $scope.information = information;
     $scope.tag = tag;
     $scope.newTag = tag ;
@@ -25,8 +25,9 @@ angular.module('tag-push-controller', ['registry-services'])
             //success
             function(value, responseHeaders) {
               toastr.success('Tag image: ' + $scope.newTag + ' success.');
-              setTimeout($scope.refresh, 1000 );
-              // $rootScope.refreshFlag = true;
+               setTimeout(function(){
+                  $rootScope.localImages = ListImage.query({});  
+               }, 1000 );
             },
             //error
             function(httpResponse) {
@@ -59,23 +60,6 @@ angular.module('tag-push-controller', ['registry-services'])
       };
 
       $scope.doTarImage = function(){
-        // alert($rootScope.refreshFlag);
-/*        var params = {
-          imageName: tag,
-          names: tag+'.tar'
-        };
-        ListImage.tar(params,{},
-            function(value, responseHeaders) {
-              var blob = new Blob([value], {type : 'application/x-tar'});
-              var objectUrl = URL.createObjectURL(blob);
-              window.open(objectUrl);
-              toastr.success(' success.');
-              // $modalInstance.close();
-            },
-            function(httpResponse) {
-              toastr.error('Failed ' + httpResponse.statusText);
-            }
-          );*/
           $modalInstance.close();
     };
 

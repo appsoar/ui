@@ -8,11 +8,11 @@
  * Controller of the docker-registry-frontend
  */
  angular.module('localimage-list-controller', ['registry-services'])
- .controller('LocalimageListController', ['$scope', '$modal', '$window','$http', 'ListImage', 
-  function($scope, $modal, $window, http, ListImage){
+ .controller('LocalimageListController', ['$rootScope', '$scope', '$modal', '$window','$http', 'ListImage', 
+  function($rootScope, $scope, $modal, $window, http, ListImage){
     // $rootScope.refreshFlag = false;
     var queryObject = {};
-    $scope.localImages = ListImage.query(queryObject);
+    $rootScope.localImages = ListImage.query(queryObject);
     // $scope.selectedImages = [];
 
     // helper method to get selected tags
@@ -37,6 +37,9 @@
           $rootScope.refreshFlag = false;
       }
     });*/
+      // $scope.refreshFlag = function(){
+      //     StateTransfer.get('refreshFlag');
+      // };
     $scope.tagImage = function(tag) {
       var modalInstance = $modal.open({
           animation: true,
@@ -105,6 +108,7 @@
         var params = {
           imageName: tag
         };
+        swal("Here's a message!");
         var history = ListImage.history(params,{},
             function(value, responseHeaders) {
               toastr.success('History image: ' + tag + ' success.');
@@ -143,21 +147,38 @@
         var params = {
           imageName: tag
         };
-        ListImage.remove(params,{},
-            function(value, responseHeaders) {
-              toastr.success('Delete image: ' + tag + ' success.');
-              setTimeout($scope.refresh, 1000 );
-            },
-            function(httpResponse) {
-              toastr.error('Failed to delete image: ' + tag + ' <br/>Response: ' + httpResponse.statusText);
-            }
-        );
-    };
+        swal({
+          title: "Are you sure?",
+          text: "This operation cannot be undone!",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#DD6B55",
+          confirmButtonText: "Yes, delete it!",
+          cancelButtonText: "No, cancel !",
+          closeOnConfirm: true,
+          closeOnCancel: true
+        },
+        function(isConfirm){
+          if (isConfirm) {
+              ListImage.remove(params,{},
+              function(value, responseHeaders) {
+                toastr.success('Delete image: ' + tag + ' success.');
+                setTimeout(function(){
+                  $rootScope.localImages = ListImage.query(queryObject);
+                  // swal("Deleted!", "Your imaginary file has been deleted.", "success");
+                }, 1000 );
+              },
+              function(httpResponse) {
+                toastr.error('Failed to delete image: ' + tag + ' <br/>Response: ' + httpResponse.statusText);
+              }
+             );
+           } 
+           //else {
+          //     swal("Cancelled", "Your image file is safe :)", "error");
+          // }
+        });
 
-    $scope.refresh = function(){
-        $window.location.href = 'localimage';
-        $route.reload();
-    }
+    };
   }])
  .filter("repo_tag",function(){
     return function(input,param){

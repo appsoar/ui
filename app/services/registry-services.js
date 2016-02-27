@@ -213,8 +213,6 @@ angular.module('registry-services', ['ngResource'])
             VirtualSize: item.VirtualSize
           });
         });
-        console.log(data);
-        console.log(localImage);
         return localImage;
       }
     },
@@ -266,13 +264,6 @@ angular.module('registry-services', ['ngResource'])
       },
       url: 'http://192.168.3.147:9001/build'
     },
-/*    'tar': {
-      method: 'GET',
-      headers: {
-        'responseType': 'arraybuffer'
-      },
-      url: 'http://192.168.3.147:9001/images/:imageName/get?names=:names'
-    },*/
     'load': {
       method: 'POST',
       transformRequest: [],
