@@ -31,22 +31,22 @@
 
   <table class="table table-hover">
     <thead>
-        <th >
+        <th width="25%">
             REPOSITORY
         </th>
-        <th >
+        <th width="13%">
             TAG
         </th>
-        <th >
+        <th width="13%">
             IMAGE ID
         </th>
-        <th >
+        <th width="12%">
             GREATED
         </th>
-        <th >
+        <th width="12%">
             VIRTUAL SIZE
         </th>
-        <th>
+        <th width="25%">
             OPERATION
         </th>
     </thead>
@@ -69,11 +69,12 @@
              {{image.VirtualSize  / 1000 / 1000 | number: 2}} MB
             </td>
             <td>
-              <button title="Tag or Push Image" type="button" ng-disabled="waiteFlag" ng-click="tagImage(tag)" class="btn btn-info">
-                <span class="glyphicon glyphicon-edit"></span>        
+              <button title="Tag or Push Image" type="button"  ng-disabled="currentRemoving.removeFlag" ng-click="tagImage(tag)" class="btn btn-info">
+                <span class="{{currentPushing.pushClass}}"></span>        
+                {{currentPushing.pushTitle}}
               </button>
 
-              <button title="History Image" type="button" ng-disabled="waiteFlag" ng-click="historyImage(tag)" class="btn btn-info">
+              <button title="History Image" type="button" ng-disabled="currentRemoving.removeFlag"  ng-click="historyImage(tag)" class="btn btn-info">
                 <span class="glyphicon glyphicon-info-sign"></span>        
               </button>
 
@@ -81,9 +82,15 @@
                 <span class="glyphicon glyphicon-eye-open"></span>        
               </button> -->
 
-              <button title="Delete Image" type="button" ng-disabled="waiteFlag" ng-click="removeImage(tag)" class="btn btn-danger">
-                <span class="glyphicon glyphicon-trash"></span>        
+              <button title="Delete Image" type="button" ng-disabled="currentRemoving.removeFlag || currentPushing.pushFlag" ng-click="removeImage(tag)"  class="btn btn-danger ">
+                <span class="{{currentRemoving.circleClass}}"></span> 
+                {{currentRemoving.removeTitle}}       
               </button>
+
+<!--               <button title="Delete Image" type="button" ng-disabled="waiteFlag" ng-click="removeImage(tag)" class="btn btn-danger">
+                <span ng-show="true" class="glyphicon glyphicon-play-circle state-removing"></span> 
+              </button> -->
+
             </td>
           </tr>
     </tbody>
@@ -93,7 +100,7 @@
 <nav>
   <ul class="pager">
     <li class="previous" ng-class="{disabled: !lastNamespace || !lastRepository}">
-      <a href="localimage/{{reposPerPage}}">
+      <a href="#">
         <span aria-hidden="true">&larr;</span>
         First page
       </a>
@@ -120,8 +127,8 @@
     </li>
     <li class="next" ng-class="{disabled: !repositories.lastNamespace || !repositories.lastRepository}">
       <!-- TODO: Make sure the button is not clickable -->
-      <a href="/repositories/{{reposPerPage}}/{{repositories.lastNamespace}}/{{repositories.lastRepository}}"
-        ng-disabled="!repositories.lastNamespace || !repositories.lastRepository">
+      <a href="#"
+        ng-disabled="true">
         Next <span aria-hidden="true">&rarr;</span>
       </a>
     </li>

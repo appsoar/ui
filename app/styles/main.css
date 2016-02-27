@@ -144,3 +144,16 @@ footer img {
 .css-form input.ng-valid.ng-dirty {
   background-color: #78FA89;
 }
+
+.state-removing {
+  animation: circle 2s infinite linear;
+  /*-moz-transform:rotate(36deg);*/
+}
+
+@keyframes circle{
+  0% {transform: rotate(0deg);}
+  25% {transform: rotate(90deg);}
+  50% {transform: rotate(180deg);}
+  75% {transform: rotate(270deg);}
+  100% {transform: rotate(360deg);}
+}

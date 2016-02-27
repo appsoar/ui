@@ -11,6 +11,16 @@
  .controller('LocalimageListController', ['$rootScope', '$scope', '$modal', '$window','$http', 'ListImage', 
   function($rootScope, $scope, $modal, $window, http, ListImage){
     // $rootScope.refreshFlag = false;
+     $scope.currentRemoving = {
+      removeFlag: false,
+      circleClass: 'glyphicon glyphicon-trash',
+      removeTitle: ''
+    };
+    $scope.currentPushing = {
+      pushFlag: false,
+      pushClass: 'glyphicon glyphicon-edit',
+      pushTitle: ''
+    }
     var queryObject = {};
     $rootScope.localImages = ListImage.query(queryObject);
     // $scope.selectedImages = [];
@@ -41,6 +51,7 @@
       //     StateTransfer.get('refreshFlag');
       // };
     $scope.tagImage = function(tag) {
+      var that = this;
       var modalInstance = $modal.open({
           animation: true,
           templateUrl: '/localimage/tagAndPushImage.html',
@@ -51,6 +62,9 @@
             },
             tag: function() {            
               return tag;
+            },
+            that: function() {
+              return that;
             }
           }
       });
@@ -144,6 +158,7 @@
     };*/
 
     $scope.removeImage = function(tag){
+        var that = this;
         var params = {
           imageName: tag
         };
@@ -152,32 +167,44 @@
           text: "This operation cannot be undone!",
           type: "warning",
           showCancelButton: true,
+          cancelButtonText: "No, cancel !",
           confirmButtonColor: "#DD6B55",
           confirmButtonText: "Yes, delete it!",
-          cancelButtonText: "No, cancel !",
           closeOnConfirm: true,
           closeOnCancel: true
         },
         function(isConfirm){
           if (isConfirm) {
+              that.currentRemoving = {
+                removeFlag: true,
+                circleClass: 'glyphicon glyphicon-repeat state-removing',
+                removeTitle: 'removing'
+              };
+              console.log(that.currentRemoving);
+              console.log('that.currentRemoving1');
+
               ListImage.remove(params,{},
-              function(value, responseHeaders) {
-                toastr.success('Delete image: ' + tag + ' success.');
-                setTimeout(function(){
-                  $rootScope.localImages = ListImage.query(queryObject);
-                  // swal("Deleted!", "Your imaginary file has been deleted.", "success");
-                }, 1000 );
-              },
-              function(httpResponse) {
+                function(value, responseHeaders) {
+                  toastr.success('Delete image: ' + tag + ' success.');
+                  setTimeout(function(){
+                    $rootScope.localImages = ListImage.query(queryObject);
+                    // swal('Deleted!', tag + ' has been deleted.', 'success');
+                  }, 1000 );
+                },
+                function(httpResponse) {
+                  that.currentRemoving = {
+                    removeFlag: false,
+                    circleClass: 'glyphicon glyphicon-trash',
+                    removeTitle: ''
+                  };
                 toastr.error('Failed to delete image: ' + tag + ' <br/>Response: ' + httpResponse.statusText);
               }
              );
            } 
-           //else {
-          //     swal("Cancelled", "Your image file is safe :)", "error");
+          //  else {
+          //     // swal('Cancelled', 'Your image is safe :)', 'error');
           // }
         });
-
     };
   }])
  .filter("repo_tag",function(){

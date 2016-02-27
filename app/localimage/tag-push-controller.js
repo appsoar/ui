@@ -8,8 +8,8 @@
  * Controller of the docker-registry-frontend
  */
 angular.module('tag-push-controller', ['registry-services'])
-  .controller('TagPushController', ['$rootScope', '$scope', '$route', '$modalInstance', '$window', '$http', 'ListImage', 'information', 'tag',  
-  function( $rootScope, $scope, $route, $modalInstance, $window,$http, ListImage, information, tag){
+  .controller('TagPushController', ['$rootScope', '$scope', '$route', '$modalInstance', '$window', '$http', 'ListImage', 'information', 'tag',  'that',
+  function( $rootScope, $scope, $route, $modalInstance, $window,$http, ListImage, information, tag, that){
     $scope.information = information;
     $scope.tag = tag;
     $scope.newTag = tag ;
@@ -40,6 +40,11 @@ angular.module('tag-push-controller', ['registry-services'])
 
       //push local image to private registry
     $scope.doPushImage = function () {
+      that.currentPushing = {
+        pushFlag: true,
+        pushClass: 'glyphicon glyphicon-repeat state-removing',
+        pushTitle: 'pushing'
+      };
       var temp = $scope.newTag.split(":");
       var param = {
         imageName: temp[0] + ':' + temp[1] ,
@@ -48,11 +53,21 @@ angular.module('tag-push-controller', ['registry-services'])
       ListImage.push(param, {},
           //success
           function(value, responseHeaders) {
+              that.currentPushing = {
+                pushFlag: false,
+                pushClass: 'glyphicon glyphicon-edit',
+                pushTitle: ''
+              };
              toastr.success('Push image: ' + $scope.newTag + ' success.');
           },
           //error
           function(httpResponse) {
              // toastr.success('Push image: ' + $scope.newTag + ' success.');
+            that.currentPushing = {
+              pushFlag: false,
+              pushClass: 'glyphicon glyphicon-edit',
+              pushTitle: ''
+            };
             toastr.error('Failed to push image: ' + $scope.newTag + ' <br/>Response: ' + httpResponse.statusText);
           }
         );
