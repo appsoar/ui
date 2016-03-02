@@ -1,4 +1,5 @@
-FROM debian:jessie
+FROM ubuntu:14.04
+# FROM debian:jessie
 MAINTAINER "Konrad Kleine"
 
 

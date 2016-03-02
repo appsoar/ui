@@ -196,9 +196,9 @@ angular.module('registry-services', ['ngResource'])
   }])
   .factory('ListImage', ['$resource', function($resource){
 
-  return $resource('http://192.168.3.147:9001/images/json', {}, {
-    'query': { 
-      method:'GET', 
+  return $resource('http://192.168.2.122:3092/images/json', {}, {
+    'query': {
+      method:'GET',
       isArray: true,
       transformResponse: function(data /*, headers*/){
         var localImage = [];
@@ -218,16 +218,16 @@ angular.module('registry-services', ['ngResource'])
     },
     'tag': {
       method: 'POST',
-      url: 'http://192.168.3.147:9001/images/:imageName/tag?repo=:repo&force=0&tag=:tag'
+      url: 'http://192.168.2.122:3092/images/:imageName/tag?repo=:repo&force=0&tag=:tag'
     },
     'push': {
       method: 'POST',
-      url: 'http://192.168.3.147:9001/images/:imageName/push?tag=:tag'
+      url: 'http://192.168.2.122:3092/images/:imageName/push?tag=:tag'
     },
     'inspect': {
         method: 'GET',
         isArray: false,
-        url: 'http://192.168.3.147:9001/images/:imageName/json',
+        url: 'http://192.168.2.122:3092/images/:imageName/json',
         transformResponse: function(data) {
           var item = angular.fromJson(data);
           var localImageDetail = {
@@ -247,7 +247,7 @@ angular.module('registry-services', ['ngResource'])
     'history': {
       method: 'GET',
       isArray: true,
-      url: 'http://192.168.3.147:9001/images/:imageName/history',
+      url: 'http://192.168.2.122:3092/images/:imageName/history',
       transformResponse: function (data) {
         return angular.fromJson(data);  
       }
@@ -255,14 +255,14 @@ angular.module('registry-services', ['ngResource'])
   'remove': {
       method: 'DELETE',
       isArray: true,
-      url: 'http://192.168.3.147:9001/images/:imageName?force=true'
+      url: 'http://192.168.2.122:3092/images/:imageName?force=true'
     },
     'build': {
       method: 'POST',
       headers: {
           'Content-Type': 'application/tar'
       },
-      url: 'http://192.168.3.147:9001/build'
+      url: 'http://192.168.2.122:3092/build'
     },
     'load': {
       method: 'POST',
@@ -270,7 +270,7 @@ angular.module('registry-services', ['ngResource'])
       headers: {
            'Content-Type': 'application/tar'
       },
-      url: 'http://192.168.3.147:9001/images/load'
+      url: 'http://192.168.2.122:3092/images/load'
     }
   });
 }]);
